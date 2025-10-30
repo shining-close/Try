@@ -1,0 +1,62 @@
+'''
+练习4–（函数和csv）在Python中，从技术上讲，不可能直接从.csv文件中删除记录。
+相反，您需要将文件保存到Python中的临时列表中，对列表进行更改，然后用临时列表覆盖原始文件。
+更改之前的程序以允许您执行此操作。您的菜单现在应该看起来像这样：
+1）添加到文件
+2）查看所有记录
+3）删除记录
+4）退出程序
+'''
+
+
+import csv
+
+def addtofile():
+    file = open("Salaries.csv", "a")
+    name = input("Enter name: ")
+    salary = int(input("Enter Salary: "))
+    newrecord = name + ", " + str(salary) + "\n"
+    file.write(str(newrecord))
+    file.close()
+
+def viewrecords():
+    file = open("salaries.csv", "r")
+    for row in file:
+        print(row)
+    file.close()
+
+def deleterecord():
+    file = open("Salaries.csv", "r")
+    x = 0
+    tmplist = []
+    for row in file:
+        tmplist.append(row)
+    file.close()
+    for row in tmplist:
+        print(x, row)
+        x = x + 1
+    rowtodelete = int(input("Enter the row number to delete: "))
+    del tmplist[rowtodelete]
+    file = open("Salaries.csv", "w")
+    for row in tmplist:
+        file.write(row)
+    file.close()
+
+tryagain = True
+while tryagain == True:
+    print("1) Add to file")
+    print("2) View all records")
+    print("3) Delete a record")
+    print("4) Quit programme")
+    print()
+    selection = input("Enter the number of your selection: ")
+    if selection == "1":
+        addtofile()
+    elif selection == "2":
+        viewrecords()
+    elif selection == "3":
+        deleterecord()
+    elif selection == "4":
+        tryagain = False
+    else:
+        print("Incorrect option")
